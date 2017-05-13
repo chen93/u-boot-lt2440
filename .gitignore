@@ -30,7 +30,7 @@
 /u-boot.lds
 /u-boot-onenand.bin
 /u-boot-flexonenand.bin
-
+/origin-u-boot.bin
 #
 # Generated files
 #

@@ -52,6 +52,16 @@
 #define CONFIG_USE_IRQ		1
 #endif
 
+/* Add usb host.  */
+#ifndef CONFIG_USB_OHCI
+#define CONFIG_USB_OHCI
+#define CONFIG_USB_STORAGE
+#define CONFIG_CMD_USB
+#define CONFIG_CMD_FAT
+#define CONFIG_DOS_PARTITION
+#define CONFIG_SUPPORT_VFAT
+#endif
+
 /*
  * Size of malloc() pool
  */
