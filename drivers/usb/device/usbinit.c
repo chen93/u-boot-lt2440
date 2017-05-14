@@ -210,7 +210,7 @@ void Port_Init(void)
 }
 
 
-void usb_init(void)
+void usb_slave_init(void)
 {
 	char *mode;
 	int i;

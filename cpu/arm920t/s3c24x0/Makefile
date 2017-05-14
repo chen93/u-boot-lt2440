@@ -28,8 +28,8 @@ LIB	= $(obj)lib$(SOC).a
 #COBJS-$(CONFIG_USE_IRQ) += interrupts.o
 COBJS-y	+= speed.o
 COBJS-y	+= timer.o
-#COBJS-y	+= usb.o
-#COBJS-y	+= usb_ohci.o
+COBJS-y	+= usb.o
+COBJS-y	+= usb_ohci.o
 
 
 SRCS	:= $(SOBJS:.o=.S) $(COBJS-y:.o=.c)

@@ -386,7 +386,7 @@ if (isNORFlash())
 	/* enable exceptions */
 	Port_Init();
 	enable_interrupts ();
-	usb_init();
+	usb_slave_init();
 	
 	/* Perform network card initialisation if necessary */
 #ifdef CONFIG_DRIVER_TI_EMAC
