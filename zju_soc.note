@@ -6,8 +6,32 @@ uImage.bin: device 0 offset 0x200000, size 0x300000
 yaffs2.bin: device 0 offset 0x500000, size 0x30777c0
 
 
+#############  usb slave download ###############
+# need 'dnw' tool #
+Menu mode:
+send 'u' to u-boot, and wait download.
+in other terminal, 'sudo dnw ./u-boot.bin'
+send 'r' to u-boot, re-boot.
+
+cmd line mode:
+usbslave 1 0x3000a000
+in another client terminal, 'sudo dnw ./u-boot.bin'
+nand erase u-boot
+nand write 0x3000a000 u-boot
+
+
+#############  usb host download  ###############
+# need an U-disk #
+q           // quit to cmd line mode;
+usb start   // scan the usb devices, if connected, it will display '1 Storage Device(s)'
+fatls usb 0 // list the files
+fatload usb 0 0x3000a000 u-boot.bin
+nand erase u-boot
+nand write 0x3000a000 u-boot
+
 
 #############  tftp download ####################
+# need 'tftp tftp-hpa xintd' service #
 In host:
 if virtual machine such as vmware, config the net to bridge.
 config the host PC's network connetions' to static ip, such as
