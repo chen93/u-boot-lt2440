@@ -134,10 +134,10 @@ void param_menu_shell(void)
 
 void main_menu_usage(void)
 {
-    printf("\r\n#####      LT2440 U-Boot -2010.03     		  #####\r\n");
-    printf("\r#####     Welcome to Embeded World   		  #####\r\n");
-    printf("\r#####      	             designed by: LuTong  #####\r\n");
-    printf("\r#####     		     www.lt-net.cn        #####\r\n");
+    printf("\r\n#####      LT2440 U-Boot -2010.03      #####\r\n");
+    printf  ("\r#####     Welcome to Embeded World     #####\r\n");
+    printf  ("\r#####       designed by: zju120        #####\r\n");
+    printf  ("\r#####              test 1              #####\r\n");
     
     printf("[u] Download u-boot or STEPLDR.nb1 to Nand Flash\r\n");
     printf("[e] Download e-boot to Nand Flash\r\n");
