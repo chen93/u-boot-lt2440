@@ -62,6 +62,13 @@
 #define CONFIG_SUPPORT_VFAT
 #endif
 
+/* For SD Card.  */
+#define CONFIG_CMD_MMC
+#define CONFIG_MMC    1
+#define CONFIG_MMC_S3C  1  /* Enabling the MMC driver */
+#define CFG_MMC_BASE    0xff000000
+
+
 /*
  * Size of malloc() pool
  */

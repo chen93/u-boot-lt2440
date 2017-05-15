@@ -32,6 +32,9 @@
 #ifdef CONFIG_HAS_DATAFLASH
 #include <dataflash.h>
 #endif
+#ifdef CONFIG_CMD_MMC
+#include <mmc.h>
+#endif
 #include <watchdog.h>
 
 #include <u-boot/md5.h>
@@ -402,6 +405,46 @@ int do_mem_cp ( cmd_tbl_t *cmdtp, int flag, int argc, char *argv[])
 		puts ("done\n");
 		return 0;
 	}
+#endif
+
+#if defined(CONFIG_CMD_MMC)
+  if (mmc2info(dest)) {
+    int rc;
+
+    puts ("Copy to MMC... ");
+    switch (rc = mmc_write ((uchar *)addr, dest, count*size)) {
+    case 0:
+      putc ('\n');
+      return 1;
+    case -1:
+      puts ("failed\n");
+      return 1;
+    default:
+      printf ("%s[%d] FIXME: rc=%d\n",__FILE__,__LINE__,rc);
+      return 1;
+    }
+    puts ("done\n");
+    return 0;
+  }
+
+  if (mmc2info(addr)) {
+    int rc;
+
+    puts ("Copy from MMC... ");
+    switch (rc = mmc_read (addr, (uchar *)dest, count*size)) {
+    case 0:
+      putc ('\n');
+      return 1;
+    case -1:
+      puts ("failed\n");
+      return 1;
+    default:
+      printf ("%s[%d] FIXME: rc=%d\n",__FILE__,__LINE__,rc);
+      return 1;
+    }
+    puts ("done\n");
+    return 0;
+  }
 #endif
 
 #ifdef CONFIG_HAS_DATAFLASH
