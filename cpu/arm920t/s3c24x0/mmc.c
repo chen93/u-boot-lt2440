@@ -33,7 +33,6 @@
 #include <fat.h>
 
 #if defined(CONFIG_MMC) && defined(CONFIG_MMC_S3C)
-#define debug(fmt,args...)	printf (fmt ,##args)
 #ifdef DEBUG
 #define pr_debug(fmt, args...) printf(fmt, ##args)
 #else
@@ -42,7 +41,7 @@
 
 #define CONFIG_MMC_WIDE
 
-static struct s3c2410_sdi *sdi;
+volatile struct s3c2410_sdi *sdi;
 
 static block_dev_desc_t mmc_dev;
 
@@ -108,7 +107,6 @@ static u_int32_t *mmc_cmd(ushort cmd, ulong arg, ushort flags)
   }
 
   debug("final MMC CMD status 0x%x\n", csta);
-
   sdi->SDICSTA |= csta_rdy_bit;
 
   if (flags & CMD_F_RESP) {
@@ -131,7 +129,6 @@ static int mmc_block_read(uchar *dst, ulong src, ulong len)
 
   if (len == 0)
     return 0;
-
   debug("mmc_block_rd dst %lx src %lx len %d\n", (ulong)dst, src, len);
 
   /* set block len */
@@ -177,7 +174,6 @@ static int mmc_block_read(uchar *dst, ulong src, ulong len)
       }
     }
   }
-
   debug("waiting for SDIDSTA  (currently 0x%08x\n", sdi->SDIDSTA);
   while (!(sdi->SDIDSTA & (1 << 4))) {}
   debug("done waiting for SDIDSTA (currently 0x%08x\n", sdi->SDIDSTA);
@@ -380,7 +376,7 @@ static void print_mmc_cid(mmc_cid_t *cid)
 
 static void print_sd_cid(const struct sd_cid *cid)
 {
-  printf("Manufacturer:       0x%02x, OEM \"%c%c\"\n",
+  printf("Manufacturer:       0x%02x, OEM \"%c %c  \"\n",
       cid->mid, cid->oid_0, cid->oid_1);
   printf("Product name:       \"%c%c%c%c%c\", revision %d.%d\n",
       cid->pnm_0, cid->pnm_1, cid->pnm_2, cid->pnm_3, cid->pnm_4,
@@ -411,11 +407,14 @@ int mmc_init(int verbose)
 
   sdi->SDIBSIZE = 512;
 #if defined(CONFIG_S3C2410)
+#if 0
   /* S3C2410 has some bug that prevents reliable operation at higher speed */
   //sdi->SDIPRE = 0x3e;  /* SDCLK = PCLK/2 / (SDIPRE+1) = 396kHz */
   sdi->SDIPRE = 0x02;  /* 2410: SDCLK = PCLK/2 / (SDIPRE+1) = 11MHz */
   sdi->SDIDTIMER = 0xffff;
-#elif defined(CONFIG_S3C2440) || defined(CONFIG_S3C2442)
+#endif
+#endif
+#if defined(CONFIG_S3C2440) || defined(CONFIG_S3C2442)
   sdi->SDIPRE = 0x05;  /* 2410: SDCLK = PCLK / (SDIPRE+1) = 11MHz */
   sdi->SDIDTIMER = 0x7fffff;
 #endif

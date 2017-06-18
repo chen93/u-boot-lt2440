@@ -71,7 +71,7 @@ In console:
 
 2. fatls mmc 0
 
-3. fatload mmc 0 0x3000a000 u-boot.bin
+3. fatload mmc 0 0x3000a000 u-boot_mmc.bin
 
 4. nand erase u-boot
 
