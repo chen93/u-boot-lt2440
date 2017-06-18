@@ -33,7 +33,7 @@
 #include <fat.h>
 
 #if defined(CONFIG_MMC) && defined(CONFIG_MMC_S3C)
-
+#define debug(fmt,args...)	printf (fmt ,##args)
 #ifdef DEBUG
 #define pr_debug(fmt, args...) printf(fmt, ##args)
 #else

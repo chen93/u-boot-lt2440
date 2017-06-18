@@ -677,6 +677,8 @@ struct s3c2410_sdi {
 	u32	SDIDCNT;
 	u32	SDIDSTA;
 	u32	SDIFSTA;
+#ifdef CONFIG_S3C2410
+#if 0
 #ifdef __BIG_ENDIAN
 	u8	res[3];
 	u8	SDIDAT;
@@ -685,6 +687,12 @@ struct s3c2410_sdi {
 	u8	res[3];
 #endif
 	u32	SDIIMSK;
+#endif
+#endif
+#ifdef CONFIG_S3C2440
+        u32 SDIIMSK;
+        u32 SDIDAT;
+#endif
 };
 
 #endif /*__S3C24X0_H__*/
