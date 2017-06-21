@@ -141,6 +141,9 @@ void main_menu_usage(void)
     
     printf("[u] Download u-boot or STEPLDR.nb1 to Nand Flash\r\n");
     printf("[e] Download e-boot to Nand Flash\r\n");
+    printf("[t] Download u-boot to Nand Flash by tftp\r\n");
+    printf("[h] Download u-boot to Nand Flash by usb host\r\n");
+    printf("[c] Download u-boot to Nand Flash by sd card\r\n");
  if (isNORFlash())
     printf("[n] Download u-boot to Nor Flash\r\n");
  
@@ -180,11 +183,29 @@ void menu_shell(void)
         {
 	    case 'u':
 		{
-                	strcpy(cmd_buf, "usbslave 1 0x3000a000; nand erase u-boot; nand write 0x3000a000 u-boot ");
+                	strcpy(cmd_buf, "usbslave 1 0x3000a000; nand erase u-boot; nand write 0x3000a000 u-boot; reset ");
+                	run_command(cmd_buf, 0);
+                	break;
+		}
+	    case 't':
+		{
+                    strcpy(cmd_buf, "tftpboot 0x3000a000 u-boot-tftp.bin; nand erase u-boot; nand write 0x3000a000 u-boot; reset ");
+                	run_command(cmd_buf, 0);
+                	break;
+		}
+	    case 'h':
+		{
+                    strcpy(cmd_buf, "usb start; fatload usb 0 0x3000a000 u-boot-usb.bin; nand erase u-boot; nand write 0x3000a000 u-boot; reset ");
                 	run_command(cmd_buf, 0);
                 	break;
 		}
 
+	    case 'c':
+		{
+                    strcpy(cmd_buf, "mmc init; fatload mmc 0 0x3000a000 u-boot-sd.bin; nand erase u-boot; nand write 0x3000a000 u-boot; reset ");
+                	run_command(cmd_buf, 0);
+                	break;
+		}
             case 'n':
             {
                 if (isNORFlash())
